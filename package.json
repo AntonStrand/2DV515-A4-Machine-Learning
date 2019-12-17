@@ -1,0 +1,30 @@
+{
+  "name": "2dv515-a4-machine-learning",
+  "version": "1.0.0",
+  "description": "My solution for assignment 4 in Web Intelligence (2DV515) at Linnaeus University",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AntonStrand/2DV515-A4-Machine-Learning.git"
+  },
+  "keywords": [
+    "Machine Learning",
+    "ML",
+    "assignment",
+    "A4",
+    "web intelligence",
+    "2dv515"
+  ],
+  "author": "Anton Strand (@antonstrand)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AntonStrand/2DV515-A4-Machine-Learning/issues"
+  },
+  "homepage": "https://github.com/AntonStrand/2DV515-A4-Machine-Learning#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
