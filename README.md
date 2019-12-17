@@ -31,10 +31,14 @@ void fit ( X:float[][], y:int[] )
 ```
 Trains the model on input examples X and labels y.
 
+---
+
 ```java
 int[] predict ( X:float[][] )
 ```
 Classifies examples X and returns a list of predictions.
+
+---
 
 ### Other methods
 ```java
@@ -42,12 +46,18 @@ float accuracy_score ( preds:int[], y:int[] )
 ```
 Calculates accuracy score for a list of predictions.
 
+---
+
 ```java
 int[][] confusion_matrix ( preds:int[], y:int[] )
 ```
 Generates a confusion matrix and returns the result as an integer matrix.
 
+---
+
 ```java
 int[] crossval_predict ( X:float[][], y:int[], folds:int )
 ```
 Runs n-fold cross-validation and returns a list of predictions.
+
+---
