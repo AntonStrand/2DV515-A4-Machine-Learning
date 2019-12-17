@@ -26,5 +26,9 @@
   "homepage": "https://github.com/AntonStrand/2DV515-A4-Machine-Learning#readme",
   "devDependencies": {
     "nodemon": "^2.0.2"
+  },
+  "dependencies": {
+    "crocks": "^0.12.4",
+    "ramda": "^0.26.1"
   }
 }
