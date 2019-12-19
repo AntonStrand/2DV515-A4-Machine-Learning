@@ -4,6 +4,7 @@ const { categoryToInt } = require('./readData/categoryToInt')
 
 const { map, mean, pipe, propOr, transpose } = require('ramda')
 
+/** categorize :: ([[ Number ]], [ Number ]) -> Object */
 const categorize = (data, categories) =>
   data.reduce(
     (categorized, row, i) => ({
@@ -13,6 +14,7 @@ const categorize = (data, categories) =>
     {}
   )
 
+/** standardDeviation :: [ Number ] -> Number */
 const standardDeviation = ns => {
   const m = mean(ns)
   return Math.sqrt(
@@ -20,11 +22,13 @@ const standardDeviation = ns => {
   )
 }
 
+/** summarizeAttribute :: [ Number ] -> { mean :: Number, stdDev :: Number } */
 const summarizeAttribute = ns => ({
   mean: mean(ns),
   stdDev: standardDeviation(ns)
 })
 
+/** train :: ([[ Number ]], [ Number ]) -> [[ { mean :: Number, stdDev :: Number } ]] */
 const train = pipe(
   categorize,
   Object.values,
