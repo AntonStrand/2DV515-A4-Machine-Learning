@@ -1,3 +1,4 @@
+'use strict'
 let categoryIndex = {}
 let size = 0
 
