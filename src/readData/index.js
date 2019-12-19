@@ -2,7 +2,6 @@
 const Async = require('crocks/Async')
 const Pair = require('crocks/Pair')
 const not = require('crocks/logic/not')
-const { categoryToInt } = require('./categoryToInt')
 const {
   append,
   filter,
@@ -35,13 +34,15 @@ const convertCSV = pipe(lines, tail, removeEmptyRows, map(columns))
 const readCSV = pipe(readFile, map(convertCSV))
 
 /** splitDataAndCategories :: [[a]] -> Pair [[a]] [Number] */
-const splitDataAndCategories = reduce(
-  (prev, row) =>
-    prev.bimap(append(init(row)), append(categoryToInt(last(row)))),
-  Pair([], [])
-)
+const splitDataAndCategories = categoryToInt =>
+  reduce(
+    (prev, row) =>
+      prev.bimap(append(init(row)), append(categoryToInt(last(row)))),
+    Pair([], [])
+  )
 
-/** readData :: String -> Pair [[a]] [Number] */
-const readData = pipe(readCSV, map(splitDataAndCategories))
+/** readData :: (a -> Number) -> String -> Pair [[a]] [Number] */
+const readData = categoryToInt =>
+  pipe(readCSV, map(splitDataAndCategories(categoryToInt)))
 
 module.exports = { readData }
