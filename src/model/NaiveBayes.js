@@ -36,6 +36,9 @@ const pdf = (x, mean, stdDev) =>
   (1 / (Math.sqrt(2 * Math.PI) * stdDev)) *
   Math.E ** (-((x - mean) ** 2) / (2 * stdDev ** 2))
 
+/** matrix :: [a] -> [[ Number ]] */
+const matrix = base => base.map(() => Array(base.length).fill(0))
+
 class NaiveBayes {
   fit (X, y) {
     this._categories = train(X, y)
@@ -51,6 +54,23 @@ class NaiveBayes {
         )
       )
     ).map(pipe(normalize, getCategory))
+  }
+
+  accuracy_score (preds, y) {
+    return (
+      preds.reduce((sum, pred, i) => (pred === y[i] ? sum + 1 : sum), 0) /
+      preds.length
+    )
+  }
+
+  confusion_matrix (preds, y) {
+    const mtx = matrix([...new Set(y)])
+
+    for (let i = 0; i < preds.length; i++) {
+      mtx[y[i]][preds[i]] = mtx[y[i]][preds[i]] + 1
+    }
+
+    return mtx
   }
 }
 
