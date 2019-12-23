@@ -2,35 +2,34 @@
 const { readData } = require('./readData')
 const { categoryToInt } = require('./readData/categoryToInt')
 const NaiveBayes = require('./model/NaiveBayes')
+const { mean } = require('ramda')
 
-readData(categoryToInt())('./datasets/iris.csv').fork(console.error, x => {
-  console.time('Iris')
-  const irises = new NaiveBayes()
-  console.time('Iris - Training time')
-  irises.fit(x.fst(), x.snd())
-  console.timeEnd('Iris - Training time')
-  console.time('Iris - Evaluation time')
-  const preds = irises.predict(x.fst())
-  console.log(
-    Math.round(irises.accuracy_score(preds, x.snd()) * 10000) / 100 + '%'
-  )
-  console.table(irises.confusion_matrix(preds, x.snd()))
-  console.timeEnd('Iris - Evaluation time')
-  console.timeEnd('Iris')
-})
+const toPercent = dec => Math.round(dec * 10000) / 100 + '%'
 
-readData(categoryToInt())('./datasets/banknote.csv').fork(console.error, x => {
-  console.time('Notes')
-  const notes = new NaiveBayes()
-  console.time('Notes - Training time')
-  notes.fit(x.fst(), x.snd())
-  console.timeEnd('Notes - Training time')
-  console.time('Notes - Evaluation time')
-  const preds = notes.predict(x.fst())
-  console.log(
-    Math.round(notes.accuracy_score(preds, x.snd()) * 10000) / 100 + '%'
+const runTests = label => data => {
+  console.log(`\n##### ${label.toUpperCase()} #####\n`)
+  console.time('Total')
+  const nb = new NaiveBayes()
+  console.time(`Training time`)
+  nb.fit(data.fst(), data.snd())
+  console.timeEnd(`Training time`)
+  console.time(`Evaluation time`)
+  const preds = nb.predict(data.fst())
+  console.timeEnd(`Evaluation time`)
+  console.log('Accuarcy:', toPercent(nb.accuracy_score(preds, data.snd())))
+  console.table(nb.confusion_matrix(preds, data.snd()))
+  const foldResult = new NaiveBayes().crossval_predict(
+    data.fst(),
+    data.snd(),
+    5
   )
-  console.table(notes.confusion_matrix(preds, x.snd()))
-  console.timeEnd('Notes - Evaluation time')
-  console.timeEnd('Notes')
-})
+  console.log('5-fold:', foldResult, toPercent(mean(foldResult)))
+  console.timeEnd('Total')
+}
+
+;['iris', 'banknote'].map(name =>
+  readData(categoryToInt())(`./datasets/${name}.csv`).fork(
+    console.error,
+    runTests(name)
+  )
+)

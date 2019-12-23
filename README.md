@@ -26,9 +26,9 @@ The [assingment](http://coursepress.lnu.se/kurs/web-intelligence/a4/).
 
 ### Grade A-B
 
-- [ ] Implement code for n-fold cross-validation, using the code structure below
-- [ ] It shall be possible to use 3, 5 or 10 folds (it is okay if your implementation supports other folds)
-- [ ] Calculate accuracy score for 5-fold cross-validation on both datasets
+- [x] Implement code for n-fold cross-validation, using the code structure below
+- [x] It shall be possible to use 3, 5 or 10 folds (it is okay if your implementation supports other folds)
+- [x] Calculate accuracy score for 5-fold cross-validation on both datasets
 
 ## Code structure requirements
 
